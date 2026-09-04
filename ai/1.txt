@@ -1,1 +1,23 @@
-test
+period 3 months
+- below list and coding 50+ Dsa questions 
+
+js
+react
+next
+typescript
+redux and redux toolkit
+system design
+docker
+ci-cd
+storybook
+performance
+accesibility
+testing
+html and css
+project introduction
+leadershp skills
+ai
+cloud knowledge
+create chatboat, your own code compilor like onecompiler
+Frontend-Interview-Questions-without-coding
+

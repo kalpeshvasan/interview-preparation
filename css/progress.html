@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3-Month Frontend Interview Preparation</title>
+<style>
+  :root{
+    --bg:#f5f7fb; --card:#fff; --text:#172033; --muted:#667085;
+    --primary:#4f46e5; --primary2:#7c3aed; --border:#e5e7eb;
+    --success:#16a34a; --shadow:0 8px 24px rgba(16,24,40,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+  header{background:linear-gradient(135deg,#312e81,#6d28d9);color:#fff;padding:34px 20px}
+  .container{max-width:1200px;margin:auto}
+  h1{margin:0 0 8px;font-size:32px}
+  header p{margin:0;color:#e9e7ff}
+  .topbar{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+  .progress-wrap{height:12px;background:#eef0f5;border-radius:99px;overflow:hidden;margin:12px 0}
+  #progressBar{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--primary2));transition:.25s}
+  .stats{display:flex;gap:24px;flex-wrap:wrap;color:var(--muted)}
+  .stats strong{display:block;font-size:24px;color:var(--text)}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+  input,select,button{font:inherit}
+  input,select{padding:11px 13px;border:1px solid var(--border);border-radius:9px;background:#fff}
+  input{flex:1;min-width:240px}
+  button{padding:10px 14px;border:0;border-radius:9px;background:var(--primary);color:#fff;cursor:pointer}
+  button.secondary{background:#eef0ff;color:#3730a3}
+  .week{margin:18px 0;border:1px solid var(--border);border-radius:14px;background:#fff;overflow:hidden}
+  .week-header{padding:17px 20px;background:#fafaff;border-bottom:1px solid var(--border);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+  .week-header h2{margin:0;font-size:19px}
+  .week-header span{color:var(--muted);font-size:14px}
+  .week-body{padding:18px 20px}
+  .topic{border:1px solid var(--border);border-radius:10px;margin:10px 0;padding:13px 14px}
+  .topic-head{display:flex;gap:10px;align-items:flex-start}
+  .topic-head input{flex:0 0 auto;min-width:auto;margin-top:4px}
+  .topic-title{font-weight:700}
+  .topic small{display:block;color:var(--muted);margin:4px 0 0 28px}
+  .badge{display:inline-block;background:#eef2ff;color:#4338ca;border-radius:99px;padding:3px 8px;font-size:12px;margin-left:6px}
+  .day{margin-top:12px;padding:10px 12px;background:#f8fafc;border-radius:8px;color:#344054}
+  .day b{color:#111827}
+  .question-list{margin:8px 0 0 28px;color:#475467}
+  .question-list li{margin:4px 0}
+  footer{text-align:center;color:var(--muted);padding:35px 15px}
+  .hidden{display:none}
+  @media(max-width:760px){.topbar{grid-template-columns:1fr}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>3-Month Frontend Interview Preparation</h1>
+    <p>12 weeks • 6 days/week • 8+ years experience • Senior / Lead Frontend focus</p>
+  </div>
+</header>
+
+<main class="container">
+  <div class="topbar">
+    <section class="card">
+      <h3>Overall Progress</h3>
+      <div class="progress-wrap"><div id="progressBar"></div></div>
+      <div class="stats">
+        <div><strong id="done">0</strong>Completed</div>
+        <div><strong id="total">0</strong>Total tasks</div>
+        <div><strong id="percent">0%</strong>Progress</div>
+      </div>
+    </section>
+    <section class="card">
+      <h3>Preparation Strategy</h3>
+      <div class="stats">
+        <div><strong>50+</strong>DSA</div>
+        <div><strong>12</strong>Weeks</div>
+        <div><strong>6</strong>Study days/week</div>
+      </div>
+      <p style="color:#667085">Use Day 7 each week for revision, mock interviews and catching up.</p>
+    </section>
+  </div>
+
+  <div class="toolbar">
+    <input id="search" placeholder="Search topics, questions, technologies...">
+    <select id="weekFilter"><option value="all">All weeks</option></select>
+    <button class="secondary" onclick="expandAll()">Expand All</button>
+    <button class="secondary" onclick="collapseAll()">Collapse All</button>
+    <button onclick="resetProgress()">Reset Progress</button>
+  </div>
+
+  <div id="plan"></div>
+</main>
+
+<footer>Frontend Interview Master Plan • Your checkbox progress is saved automatically in this browser.</footer>
+
+<script>
+const weeks = [
+{title:"Week 1 — JavaScript Foundations + HTML/CSS", focus:"Core JavaScript, browser fundamentals, semantic HTML and CSS",
+topics:[
+["JavaScript Core","scope, hoisting, let/const/var, data types, coercion, operators"],
+["Functions & Closures","declaration vs expression, arrow functions, closures, IIFE, currying"],
+["Objects & Prototypes","this, call/apply/bind, prototype chain, classes, inheritance"],
+["Async JavaScript","callbacks, promises, async/await, event loop, microtasks/macrotasks"],
+["Browser APIs","DOM, events, event delegation, fetch, storage, Web APIs"],
+["HTML & CSS","semantic HTML, forms, accessibility basics, box model, specificity, flexbox, grid, responsive design"]
+]},
+{title:"Week 2 — Advanced JavaScript + DSA I", focus:"Advanced JS patterns and first 18 coding problems",
+topics:[
+["Advanced JS","destructuring, spread/rest, Map/Set, iterators, generators, modules"],
+["Performance JS","debounce, throttle, memoization, lazy evaluation, immutable updates"],
+["DSA — Arrays","Two Sum; Best Time to Buy/Sell Stock; Contains Duplicate; Product Except Self; Maximum Subarray"],
+["DSA — Strings","Valid Anagram; Valid Palindrome; Longest Substring Without Repeating Characters; Group Anagrams"],
+["DSA — Hashing","Top K Frequent Elements; Longest Consecutive Sequence; Subarray Sum Equals K"],
+["Machine Coding","Debounce; Throttle; Deep Clone; Polyfill map/filter/reduce"]
+]},
+{title:"Week 3 — React Fundamentals + DSA II", focus:"React architecture, hooks and 15 more coding problems",
+topics:[
+["React Core","JSX, components, props, state, rendering, reconciliation, keys"],
+["Hooks","useState, useEffect, useMemo, useCallback, useRef, custom hooks"],
+["React Architecture","controlled/uncontrolled components, composition, lifting state, context"],
+["DSA — Stack/Queue","Valid Parentheses; Min Stack; Implement Queue using Stacks; Daily Temperatures"],
+["DSA — Linked List","Reverse Linked List; Merge Two Sorted Lists; Linked List Cycle; Remove Nth Node"],
+["Machine Coding","Modal; Accordion; Tabs; Autocomplete; Pagination"]
+]},
+{title:"Week 4 — React Advanced + Testing", focus:"Production React, testing strategy and DSA III",
+topics:[
+["React Advanced","React.memo, Suspense, lazy loading, error boundaries, concurrent rendering"],
+["State Management","Context vs Redux, server state vs client state, normalized state"],
+["React Testing","Jest, React Testing Library, unit/integration/component testing, mocking"],
+["DSA — Trees","Maximum Depth; Invert Binary Tree; Same Tree; Binary Tree Level Order Traversal"],
+["DSA — Binary Search","Binary Search; Search Rotated Sorted Array; Find Minimum in Rotated Array"],
+["Machine Coding","Todo App; Data Table; File Explorer; Star Rating; Infinite Scroll"]
+]},
+{title:"Week 5 — TypeScript + Redux Toolkit", focus:"Type-safe React applications and scalable state management",
+topics:[
+["TypeScript Core","types, interfaces, unions, intersections, generics, enums, narrowing"],
+["TypeScript Advanced","utility types, mapped types, conditional types, keyof, typeof, infer"],
+["React + TypeScript","typed props, events, refs, hooks, generic components, API types"],
+["Redux","store, actions, reducers, selectors, middleware, immutable updates"],
+["Redux Toolkit","configureStore, createSlice, createAsyncThunk, RTK Query, entity adapters"],
+["Practice","Convert a React feature to TypeScript; build Redux Toolkit CRUD; explain state architecture"]
+]},
+{title:"Week 6 — Next.js + System Design I", focus:"Next.js architecture and frontend system-design fundamentals",
+topics:[
+["Next.js","App Router, layouts, pages, loading/error UI, route handlers"],
+["Rendering","SSR, SSG, ISR, CSR, streaming, server/client components"],
+["Data & Security","fetch caching, revalidation, cookies, auth patterns, environment variables"],
+["System Design Basics","requirements, functional/non-functional requirements, APIs, data flow"],
+["Frontend Architecture","component architecture, feature folders, design systems, state boundaries"],
+["Design Problems","Design an e-commerce frontend; dashboard; social feed; search/autocomplete"]
+]},
+{title:"Week 7 — System Design II + Performance", focus:"Senior-level architecture, scalability and browser performance",
+topics:[
+["System Design","CDN, caching, pagination, infinite scroll, WebSockets, optimistic UI"],
+["Scalability","micro-frontends, monorepos, module boundaries, shared components"],
+["Performance","Core Web Vitals, bundle splitting, tree shaking, image optimization"],
+["Browser Performance","rendering pipeline, reflow/repaint, long tasks, Web Workers"],
+["React/Next Performance","memoization, server components, caching, prefetching, dynamic imports"],
+["Performance Practice","Analyze a slow page; create performance budget; Lighthouse/DevTools workflow"]
+]},
+{title:"Week 8 — Testing + Accessibility + Storybook", focus:"Production quality, inclusive UI and component documentation",
+topics:[
+["Testing Strategy","unit vs integration vs E2E, test pyramid, mocking, fixtures"],
+["E2E Testing","Playwright/Cypress concepts, selectors, assertions, network mocking"],
+["Accessibility","WCAG basics, keyboard navigation, focus management, ARIA, screen readers"],
+["HTML Accessibility","semantic elements, labels, forms, headings, landmarks, color contrast"],
+["Storybook","stories, controls, actions, decorators, interaction tests, visual testing"],
+["Quality Gates","coverage, accessibility checks, visual regression, CI test pipeline"]
+]},
+{title:"Week 9 — Docker + CI/CD + Cloud", focus:"Deployment knowledge expected from senior frontend engineers",
+topics:[
+["Docker","images, containers, Dockerfile, layers, multi-stage builds, environment variables"],
+["Docker Practice","Dockerize Next.js app; production image; local development workflow"],
+["CI/CD","GitHub Actions concepts, jobs, steps, caching, artifacts, secrets"],
+["Deployment","build → test → lint → security → deploy → smoke test → rollback"],
+["Cloud Basics","AWS/Azure/GCP concepts, CDN, object storage, compute, DNS, load balancing"],
+["DevOps Interview","blue-green deployment, canary, feature flags, monitoring, logs"]
+]},
+{title:"Week 10 — AI + Chatbot Project", focus:"LLMs, RAG, AI integration and one portfolio-ready chatbot",
+topics:[
+["AI Fundamentals","LLM, tokens, context window, embeddings, inference, hallucinations"],
+["Prompting","system/user prompts, structured output, few-shot prompting, guardrails"],
+["RAG","embeddings, vector database, chunking, retrieval, reranking, citations"],
+["AI Frontend","streaming responses, chat UI, optimistic UX, cancellation, retry/error states"],
+["Chatbot Project","Next.js + TypeScript chatbot; conversation history; markdown; streaming"],
+["Production AI","rate limiting, prompt injection awareness, privacy, cost controls, evaluation"]
+]},
+{title:"Week 11 — Project + Leadership + Behavioral", focus:"Turn 8 years of experience into strong senior/lead interview answers",
+topics:[
+["Project Introduction","2-minute introduction; architecture; responsibilities; team size; business impact"],
+["Technical Leadership","code reviews, standards, mentoring, estimation, technical decisions"],
+["Delivery","handling deadlines, prioritization, production incidents, stakeholder communication"],
+["Conflict & Collaboration","disagreements, difficult teammates, feedback, cross-team dependencies"],
+["Leadership Goals","short-term goal, long-term goal, strengths, weaknesses, failure and learning"],
+["Project Deep Dive","Why this architecture? Trade-offs? Performance? Testing? CI/CD? Security? Scaling?"]
+]},
+{title:"Week 12 — Final Revision + Mock Interviews", focus:"Full interview simulation and weak-area revision",
+topics:[
+["JavaScript Revision","closures, event loop, this, prototypes, promises, async output questions"],
+["React/Next Revision","rendering, hooks, performance, server/client components, architecture"],
+["System Design Revision","2 complete designs under 45 minutes each"],
+["Coding Revision","solve 10 DSA questions without looking at solutions"],
+["Behavioral Revision","project, leadership, conflict, pressure, ownership, career goals"],
+["Final Mock","2 technical mocks + 1 machine coding + 1 system design + 1 HR/leadership round"]
+]}
+];
+
+const dsa50 = [
+"Two Sum","Best Time to Buy and Sell Stock","Contains Duplicate","Product of Array Except Self",
+"Maximum Subarray","Merge Intervals","Move Zeroes","Rotate Array","3Sum","Container With Most Water",
+"Valid Anagram","Valid Palindrome","Longest Substring Without Repeating Characters","Group Anagrams",
+"Top K Frequent Elements","Longest Consecutive Sequence","Subarray Sum Equals K","Valid Parentheses",
+"Min Stack","Daily Temperatures","Evaluate Reverse Polish Notation","Queue using Stacks",
+"Reverse Linked List","Merge Two Sorted Lists","Linked List Cycle","Remove Nth Node From End",
+"Reorder List","Binary Tree Maximum Depth","Invert Binary Tree","Same Tree","Level Order Traversal",
+"Validate Binary Search Tree","Lowest Common Ancestor","Binary Search","Search in Rotated Sorted Array",
+"Find Minimum in Rotated Sorted Array","Kth Largest Element","Climbing Stairs","House Robber",
+"Coin Change","Number of Islands","Clone Graph","Course Schedule","Combination Sum",
+"Subsets","Permutations","Word Search","Implement Trie","LRU Cache","Merge Sort","Quick Sort"
+];
+
+const frontend = [
+"Explain your current project architecture","Explain a challenging technical decision","How do you lead a frontend team?",
+"How do you conduct code reviews?","How do you handle production issues?","How do you handle project deadline pressure?",
+"How do you resolve technical disagreements?","How do you mentor junior developers?","How do you estimate frontend work?",
+"How do you ensure code quality?","How do you design reusable components?","How do you approach accessibility?",
+"How do you improve application performance?","How do you structure a large React application?","Why Next.js?",
+"SSR vs SSG vs ISR vs CSR","How do you design CI/CD?","How do you handle security on the frontend?",
+"How do you manage technical debt?","What is your short-term goal?","What is your long-term goal?",
+"Why are you looking for a change?","Tell me about a failure","Tell me about a conflict","Tell me about an achievement",
+"How do you work with backend/product/design teams?","How do you handle changing requirements?","How do you make architecture decisions?",
+"How do you evaluate a new technology?","How do you use AI in frontend development?"
+];
+
+const plan = document.getElementById("plan");
+const filter = document.getElementById("weekFilter");
+weeks.forEach((w,i)=>filter.insertAdjacentHTML("beforeend",`<option value="${i}">Week ${i+1}</option>`));
+
+function taskId(w,t){ return `w${w}t${t}`; }
+
+function render(){
+  const q=document.getElementById("search").value.toLowerCase();
+  const wf=filter.value;
+  plan.innerHTML="";
+  weeks.forEach((w,wi)=>{
+    if(wf!=="all" && +wf!==wi)return;
+    const topics=w.topics.filter((x)=> (x[0]+" "+x[1]).toLowerCase().includes(q) || w.title.toLowerCase().includes(q));
+    if(!topics.length)return;
+    const section=document.createElement("section");
+    section.className="week";
+    section.dataset.week=wi;
+    section.innerHTML=`<div class="week-header" onclick="toggleWeek(${wi})">
+      <div><h2>${w.title}</h2><span>${w.focus}</span></div><b id="arrow${wi}">▼</b>
+    </div><div class="week-body" id="weekbody${wi}"></div>`;
+    plan.appendChild(section);
+    const body=section.querySelector(".week-body");
+    topics.forEach((t,ti)=>{
+      const originalIndex=w.topics.indexOf(t);
+      const id=taskId(wi,originalIndex);
+      const el=document.createElement("div");
+      el.className="topic";
+      el.innerHTML=`<div class="topic-head">
+        <input type="checkbox" data-id="${id}" onchange="saveProgress()">
+        <div><span class="topic-title">${t[0]}</span><span class="badge">Week ${wi+1}</span>
+        <small>${t[1]}</small></div></div>`;
+      body.appendChild(el);
+    });
+    if(wi===1 || wi===2 || wi===3){
+      const start=wi===1?0:wi===2?17:30, end=wi===1?17:wi===2?30:50;
+      const qbox=document.createElement("div"); qbox.className="day";
+      qbox.innerHTML=`<b>DSA Question Bank — ${end-start} problems</b><ol class="question-list">${dsa50.slice(start,end).map(x=>`<li>${x}</li>`).join("")}</ol>`;
+      body.appendChild(qbox);
+    }
+  });
+  restoreProgress(); updateStats();
+}
+function toggleWeek(i){
+  const b=document.getElementById("weekbody"+i), a=document.getElementById("arrow"+i);
+  if(!b)return; b.classList.toggle("hidden"); a.textContent=b.classList.contains("hidden")?"▶":"▼";
+}
+function expandAll(){document.querySelectorAll(".week-body").forEach((x,i)=>{x.classList.remove("hidden");const a=document.getElementById("arrow"+i);if(a)a.textContent="▼"})}
+function collapseAll(){document.querySelectorAll(".week-body").forEach((x,i)=>{x.classList.add("hidden");const a=document.getElementById("arrow"+i);if(a)a.textContent="▶"})}
+function saveProgress(){
+  const checked={...JSON.parse(localStorage.getItem("frontendPrep")||"{}")};
+  document.querySelectorAll('input[type="checkbox"][data-id]').forEach(c=>checked[c.dataset.id]=c.checked);
+  localStorage.setItem("frontendPrep",JSON.stringify(checked)); updateStats();
+}
+function restoreProgress(){
+  const saved=JSON.parse(localStorage.getItem("frontendPrep")||"{}");
+  document.querySelectorAll('input[type="checkbox"][data-id]').forEach(c=>c.checked=!!saved[c.dataset.id]);
+}
+function updateStats(){
+  const boxes=[...document.querySelectorAll('input[type="checkbox"][data-id]')];
+  const saved=JSON.parse(localStorage.getItem("frontendPrep")||"{}");
+  const done=boxes.filter(c=>saved[c.dataset.id]).length;
+  document.getElementById("done").textContent=done;
+  document.getElementById("total").textContent=boxes.length;
+  const pct=boxes.length?Math.round(done/boxes.length*100):0;
+  document.getElementById("percent").textContent=pct+"%";
+  document.getElementById("progressBar").style.width=pct+"%";
+}
+function resetProgress(){
+  if(confirm("Reset all saved progress?")){localStorage.removeItem("frontendPrep");render();}
+}
+document.getElementById("search").addEventListener("input",render);
+filter.addEventListener("change",render);
+render();
+</script>
+</body>
+</html>
